@@ -65,7 +65,4 @@ end
 template = ERB.new(File.open('template.html', 'rb').read)
 File.open('index.html', 'w+') { |f| f.puts(template.result(binding)) }
 
-serie_data.each do |data|
-  puts "#{data[:x]},#{data[:y]}"
-
-end
+puts "Page updated."
