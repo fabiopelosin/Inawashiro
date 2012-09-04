@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<head>
+  <title>CocoaPods Dashboard</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="vendor/rickshaw/rickshaw.min.css">
+  <script src="vendor/rickshaw/vendor/d3.min.js"></script>
+  <script src="vendor/rickshaw/vendor/d3.layout.min.js"></script>
+  <script src="vendor/rickshaw/rickshaw.min.js"></script>
+  <script src="vendor/rickshaw/src/js/Rickshaw.Graph.Axis.Time.js"></script>
+  <script src="vendor/rickshaw/src/js/Rickshaw.Graph.Axis.Y.js"></script>
+  <script src="vendor/rickshaw/src/js/Rickshaw.Fixtures.Time.js"></script>
+
+  <style type="text/css">
+    .rickshaw_graph {
+    }
+    h2 {
+      margin-top: 50px;
+      margin-bottom: 25px;
+    }
+    body {
+      padding-bottom: 100px;
+      color: #AAA;
+    }
+
+    #chart {
+      border: 1px solid #CCC;
+      margin-bottom:40px;
+    }
+    #y_axis {
+      position: absolute;
+      top: 1px;
+      right: 0px;
+      width: 40px;
+    }
+
+    #chart_contianer {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    h2, h3 {
+      color:#E6A33C;
+    }
+
+    h3 {
+      font-size: 14px
+    }
+
+    h4 {
+      font-size:12px;
+      color: #CCC;
+      margin: -10px 0px 4px;
+    }
+
+    .note {
+      margin-top:60px;
+      /* text-align:center; */
+    }
+
+    p {
+      font-size: 12px;
+      color: #888;
+      margin: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Stats</h2>
+    <div id="chart_contianer">
+      <div id="y_axis"></div>
+      <div id="chart"></div>
+
+      <h3>Milestones:</h3>
+      <div id="timeline"></div>
+      <h3>CocoaPods Releases:</h3>
+      <div id="timeline_cocoapods"></div>
+      <h3>Metrics:</h3>
+      <div class="row">
+        <div class="span3">
+          <h4>Total Count</h4>
+          <p><%= pods_count %> pods</p>
+        </div>
+        <div class="span3">
+          <h4>Addition Rate</h4>
+          <p><%= addition_rate %> pods per day</p>
+        </div>
+        <div class="span3">
+          <h4>Next Milestone</h4>
+          <p><%= missing_days_to_milestone %> days</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>Pods</h2>
+    <div class="row" id="pods_list">
+      <% pods_columns.each do |column_specs| %>
+      <div class="span3">
+        <% column_specs.each do |spec| %>
+        <p><span rel="tooltip" data-placement='right' data-title="<%= CGI.escapeHTML spec.summary %>"><%= spec.name %></span></p>
+        <% end %>
+      </div>
+      <% end %>
+
+    </div>
+    <div class="row">
+      <div class="span12">
+        <p class="note">Created on <%= Time.now.strftime("%Y/%m/%d") %></p>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    serie_data = <%= serie_data_json %>;
+    milestones_data = <%= milestones_data_json %>;
+    tags_data = <%= tags_data_json %>;
+
+    var graph = new Rickshaw.Graph( {
+      element  : document.querySelector("#chart"),
+      width    : 940 - 20,
+      height   : 300,
+      renderer : 'line',
+      timeBase: new Date().getTime() / 100000,
+      interpolation : "basis",
+      padding  : {
+        top: 0.05,
+        bottom: 0.05,
+        left: 0.0,
+        right: 0.01
+      },
+      series   : [
+      {
+        name   : "Pods count",
+        color  : '#E6A33C',
+        data   : serie_data,
+      }]
+    });
+
+
+    var hoverDetail = new Rickshaw.Graph.HoverDetail( { graph: graph, yFormatter: Rickshaw.Fixtures.Number.formatKMBT } );
+    var xAxis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
+    var y_axis = new Rickshaw.Graph.Axis.Y( {
+      graph: graph,
+      orientation: 'left',
+      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+      element: document.getElementById('y_axis'),
+    } );
+
+    var annotator = new Rickshaw.Graph.Annotate({
+      graph: graph,
+      element: document.getElementById('timeline')
+    });
+    for (var i = 0; i < milestones_data.length; i++) {
+      annotator.add(milestones_data[i][0], milestones_data[i][1] + " Pods");
+    }
+
+    var annotator_cocoapods = new Rickshaw.Graph.Annotate({
+      graph: graph,
+      element: document.getElementById('timeline_cocoapods')
+    });
+    for (var i = 0; i < tags_data.length; i++) {
+      annotator_cocoapods.add(tags_data[i][0], tags_data[i][1]);
+    }
+
+    graph.render();
+    $("[rel=tooltip]").tooltip( {placement: 'left'})
+  </script>
+</body>
