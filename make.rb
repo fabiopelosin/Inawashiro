@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'rubygems'
 require 'cocoapods'
 require 'googlecharts'
@@ -5,6 +7,9 @@ require 'pathname'
 require 'json'
 require 'erb'
 require 'cgi'
+
+
+`pod repo update master`
 
 sets = Pod::Source.new(Pathname.new(File.expand_path "~/.cocoapods/master")).pod_sets
 dates_by_pods = Pod::Specification::Statistics.instance.creation_dates(sets)
@@ -66,3 +71,4 @@ template = ERB.new(File.open('template.html', 'rb').read)
 File.open('index.html', 'w+') { |f| f.puts(template.result(binding)) }
 
 puts "Page updated."
+`open index.html`
