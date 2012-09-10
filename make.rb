@@ -41,10 +41,11 @@ end
 
 tags_data = []
 Dir.chdir('/Users/fabio/Documents/GitHub/CP/CocoaPods') do
-  tags_dates = `git log --tags --simplify-by-decoration --pretty="format:%at %d"`
+  tags_dates = `git for-each-ref --format="%(taggerdate): %(refname)" --sort=-taggerdate refs/tags`
   tags_dates.split("\n").each do |log|
-    match = log.match(/(.*)  \(([0-9]+\.[0-9]+\.0)\)/)
-    tags_data <<  [match[1], match[2]] if match
+    match = log.match(/(.*): refs\/tags\/(.*)/)
+    next if match[2] =~ /rc/ || match[2] !~ /[0-9]+\.[0-9]+\.0/
+    tags_data <<  [Time.parse(match[1]).to_i, match[2]] if match
   end
 end
 
@@ -71,4 +72,4 @@ template = ERB.new(File.open('template.html', 'rb').read)
 File.open('index.html', 'w+') { |f| f.puts(template.result(binding)) }
 
 puts "Page updated."
-`open index.html`
+` open index.html`
