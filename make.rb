@@ -2,12 +2,10 @@
 
 require 'rubygems'
 require 'cocoapods'
-require 'googlecharts'
 require 'pathname'
 require 'json'
 require 'erb'
 require 'cgi'
-
 
 `pod repo update master`
 
