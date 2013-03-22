@@ -85,15 +85,15 @@
       <div class="row">
         <div class="span3">
           <h4>Total Count</h4>
-          <p><%= pods_count %> pods</p>
+          <p><%= stats[:count] %> pods</p>
         </div>
         <div class="span3">
           <h4>Addition Rate</h4>
-          <p><%= addition_rate %> pods per day</p>
+          <p><%= stats[:addition_rate] %> pods per day</p>
         </div>
         <div class="span3">
           <h4>Next Milestone</h4>
-          <p><%= missing_days_to_milestone %> days</p>
+          <p><%= stats[:days_to_milestone] %> days</p>
         </div>
       </div>
     </div>
@@ -118,9 +118,9 @@
 
 
   <script>
-    serie_data = <%= serie_data_json %>;
+    serie_data = <%= graph_data_json %>;
     milestones_data = <%= milestones_data_json %>;
-    tags_data = <%= tags_data_json %>;
+    releases_data = <%= releases_data_json %>;
 
     var graph = new Rickshaw.Graph( {
       element  : document.querySelector("#chart"),
@@ -165,8 +165,8 @@
       graph: graph,
       element: document.getElementById('timeline_cocoapods')
     });
-    for (var i = 0; i < tags_data.length; i++) {
-      annotator_cocoapods.add(tags_data[i][0], tags_data[i][1]);
+    for (var i = 0; i < releases_data.length; i++) {
+      annotator_cocoapods.add(releases_data[i][0], releases_data[i][1]);
     }
 
     graph.render();

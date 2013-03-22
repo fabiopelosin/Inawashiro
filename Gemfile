@@ -1,0 +1,1 @@
+gem 'cocoapods', :path => '../CocoaPods'
