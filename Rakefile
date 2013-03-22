@@ -13,8 +13,11 @@ task :default => :deploy
 
 desc "Update & Deploy"
 task :deploy => :update do
-  sh "git commit 'update - #{Time.now.to_s}'"
+  title("Deploying")
+  sh "git add ."
+  sh "git commit -m 'update - #{Time.now.to_s}'"
   sh "git push"
+  sh "open http://irrationalfab.github.com/Inawashiro/"
 end
 
 #-----------------------------------------------------------------------------#
@@ -38,7 +41,6 @@ task :update do
   File.open('index.html', 'w+') { |f| f.puts(html) }
 
   puts "Page updated."
-  sh "open index.html"
 end
 
 #-----------------------------------------------------------------------------#
