@@ -32,9 +32,12 @@ task :update do
   count_by_date = generate_count_by_date(sets)
 
   title("Massaging data")
-  graph_data = generate_graph_data(count_by_date)
   releases_data = generate_releases_data
   stats = generate_stats(count_by_date)
+
+  title("Generating graph data")
+  graph_data = generate_graph_data(count_by_date)
+  File.open('graph.json', 'w+') { |f| f.puts(graph_data.to_json) }
 
   title("Generating HTML")
   html = generate_html(sets, graph_data, releases_data, stats)
