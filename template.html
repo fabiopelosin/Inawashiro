@@ -85,30 +85,12 @@
       <div class="row">
         <div class="span3">
           <h4>Total Count</h4>
-          <p><%= stats[:count] %> pods</p>
-        </div>
-        <div class="span3">
-          <h4>Addition Rate</h4>
-          <p><%= stats[:addition_rate] %> pods per day</p>
-        </div>
-        <div class="span3">
-          <h4>Next Milestone</h4>
-          <p><%= stats[:days_to_milestone] %> days</p>
+          <p> pods</p>
         </div>
       </div>
     </div>
 
-    <h2>Pods</h2>
-    <div class="row" id="pods_list">
-      <% pods_columns.each do |column_specs| %>
-      <div class="span3">
-        <% column_specs.each do |spec| %>
-        <p><span rel="tooltip" data-placement='right' data-title="<%= CGI.escapeHTML spec.summary %>"><%= spec.name %></span></p>
-        <% end %>
-      </div>
-      <% end %>
 
-    </div>
     <div class="row">
       <div class="span12">
         <p class="note">Updated on <%= Time.now.strftime("%Y-%m-%d") %></p>
@@ -119,8 +101,6 @@
 
   <script>
     serie_data = <%= graph_data_json %>;
-    milestones_data = <%= milestones_data_json %>;
-    releases_data = <%= releases_data_json %>;
 
     var graph = new Rickshaw.Graph( {
       element  : document.querySelector("#chart"),
@@ -153,21 +133,6 @@
       element: document.getElementById('y_axis'),
     } );
 
-    var annotator = new Rickshaw.Graph.Annotate({
-      graph: graph,
-      element: document.getElementById('timeline')
-    });
-    for (var i = 0; i < milestones_data.length; i++) {
-      annotator.add(milestones_data[i][0], milestones_data[i][1] + " Pods");
-    }
-
-    var annotator_cocoapods = new Rickshaw.Graph.Annotate({
-      graph: graph,
-      element: document.getElementById('timeline_cocoapods')
-    });
-    for (var i = 0; i < releases_data.length; i++) {
-      annotator_cocoapods.add(releases_data[i][0], releases_data[i][1]);
-    }
 
     graph.render();
     $("[rel=tooltip]").tooltip( {placement: 'left'})
