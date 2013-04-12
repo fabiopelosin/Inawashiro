@@ -5,7 +5,7 @@ require 'json'
 require 'erb'
 require 'cgi'
 
-task :default => :deploy
+task :default => :update
 
 #-----------------------------------------------------------------------------#
 # These tasks assume to be in sibling directory to the CocoaPods gem
@@ -25,21 +25,23 @@ end
 desc "Update the page"
 task :update do
   title("Updating master repo")
-  # sh "pod repo update master"
+  sh "pod repo update master"
   sets = Pod::Source.new(Pathname.new(File.expand_path "~/.cocoapods/master")).pod_sets
+  puts "COUNT: #{sets.count}"
 
   title("Computing addition dates")
   count_by_date = generate_count_by_date(sets)
 
   title("Generating graph data")
   graph_data = generate_graph_data(count_by_date)
-  File.open('graph.json', 'w+') { |f| f.puts(graph_data.to_json) }
-
-  title("Generating HTML")
-  html = generate_html(sets, graph_data)
-  File.open('index.html', 'w+') { |f| f.puts(html) }
+  json = {
+    'total_count' => sets.count,
+    'count_by_date' => graph_data,
+  }
+  File.open('graph.json', 'w+') { |f| f.puts(json.to_json) }
 
   puts "Page updated."
+  `open index.html`
 end
 
 #-----------------------------------------------------------------------------#
@@ -48,7 +50,7 @@ end
 #         Pods added by the date.
 #
 def generate_count_by_date(sets)
-  dates_by_pods = Pod::Specification::Set::Statistics.instance.creation_dates(sets)
+  dates_by_pods = Pod::Specification::Set::Statistics.new(Pod::STATISTICS_CACHE_FILE).creation_dates(sets)
   dates = dates_by_pods.values
   min_date = dates.min - (24 * 3600)
   count_by_date = {Time.utc(min_date.year, min_date.month, min_date.day) => 0}
@@ -60,7 +62,7 @@ def generate_count_by_date(sets)
   count_by_date.sort_by{|date, count| date}
 end
 
-# @return [Hash{Symbol => Number}] Hash which contains the value of the x axis
+# @return [Array<Hash{Symbol => Number}>] Hash which contains the value of the x axis
 #         (the dates expressed in the UNIX format) and of the y axis (the
 #         cumulated number of added Pods on a specific date).
 #

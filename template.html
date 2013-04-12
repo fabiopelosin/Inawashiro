@@ -1,86 +1,61 @@
 <!DOCTYPE html>
 
 <head>
-  <title>CocoaPods Dashboard</title>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <title>CocoaPods Master Repo</title>
+    <meta content="Fabio Angelo Pelosin" name="author">
+    <meta content="The CocoaPods Master Repo" name="description">
+    <meta content="CocoaPods Master Repo" property="og:title">
+    <meta content="http://feeds.cocoapods.org" property="og:url">
 
-  <link type="text/css" rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="screen.css" media="screen" type="text/css" charset="utf-8" >
+    <link rel="stylesheet" href="vendor/rickshaw/rickshaw.min.css" type="text/css" charset="utf-8" >
+    <link rel="stylesheet" href="vendor/FortAwesome/css/font-awesome.min.css" type="text/css" charset="utf-8" >
 
-  <link type="text/css" rel="stylesheet" href="vendor/rickshaw/rickshaw.min.css">
-  <script src="vendor/rickshaw/vendor/d3.min.js"></script>
-  <script src="vendor/rickshaw/vendor/d3.layout.min.js"></script>
-  <script src="vendor/rickshaw/rickshaw.min.js"></script>
-  <script src="vendor/rickshaw/src/js/Rickshaw.Graph.Axis.Time.js"></script>
-  <script src="vendor/rickshaw/src/js/Rickshaw.Graph.Axis.Y.js"></script>
-  <script src="vendor/rickshaw/src/js/Rickshaw.Fixtures.Time.js"></script>
-
-  <style type="text/css">
-    .rickshaw_graph {
-    }
-    h2 {
-      margin-top: 50px;
-      margin-bottom: 25px;
-    }
-    body {
-      padding-bottom: 100px;
-      color: #AAA;
-    }
-
-    #chart {
-      border: 1px solid #CCC;
-      margin-bottom:40px;
-    }
-    #y_axis {
-      position: absolute;
-      top: 1px;
-      right: 0px;
-      width: 40px;
-    }
-
-    #chart_contianer {
-      position: relative;
-      margin-bottom: 40px;
-    }
-
-    h2, h3 {
-      color:#E6A33C;
-    }
-
-    h3 {
-      font-size: 14px
-    }
-
-    h4 {
-      font-size:12px;
-      color: #CCC;
-      margin: -10px 0px 4px;
-    }
-
-    .note {
-      margin-top:60px;
-      /* text-align:center; */
-    }
-
-    p {
-      font-size: 12px;
-      color: #888;
-      margin: 0px;
-    }
-  </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="vendor/rickshaw/vendor/d3.min.js"></script>
+    <script src="vendor/rickshaw/vendor/d3.layout.min.js"></script>
+    <script src="vendor/rickshaw/rickshaw.min.js"></script>
+    <script src="vendor/rickshaw/src/js/Rickshaw.Graph.Axis.Time.js"></script>
+    <script src="vendor/rickshaw/src/js/Rickshaw.Graph.Axis.Y.js"></script>
+    <script src="vendor/rickshaw/src/js/Rickshaw.Fixtures.Time.js"></script>
 </head>
 
 <body>
-  <div class="container">
+  <div role="container">
+    <header>
+      <hgroup>
+      <h1>CocoaPods<br>Master Repo</h1>
+      </hgroup>
+    </header>
+
+
+
+    <section id="actions">
+    <div class="step-0">
+      <p><i class="icon-twitter icon-4x"></i><br> Follow on Twitter</p>
+    </div>
+
+    <div class="step-1">
+      <p><i class="icon-rss icon-4x"></i><br> Get the feed</p>
+    </div>
+
+    <div class="step-2">
+      <p><i class="icon-github icon-4x"></i><br> See the Octocat</p>
+    </div>
+    </section>
+
+
+    <section id="actions">
+      <p>Counting 1024 Pods since September 2011</p>
+    </section>
+
+
     <h2>Stats</h2>
     <div id="chart_contianer">
       <div id="y_axis"></div>
       <div id="chart"></div>
 
-      <h3>Milestones:</h3>
-      <div id="timeline"></div>
-      <h3>CocoaPods Releases:</h3>
-      <div id="timeline_cocoapods"></div>
       <h3>Metrics:</h3>
       <div class="row">
         <div class="span3">
@@ -89,8 +64,6 @@
         </div>
       </div>
     </div>
-
-
     <div class="row">
       <div class="span12">
         <p class="note">Updated on <%= Time.now.strftime("%Y-%m-%d") %></p>
@@ -133,8 +106,6 @@
       element: document.getElementById('y_axis'),
     } );
 
-
     graph.render();
-    $("[rel=tooltip]").tooltip( {placement: 'left'})
   </script>
 </body>

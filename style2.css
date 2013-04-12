@@ -1,0 +1,178 @@
+
+/*****************************************************************************/
+/* CocoaPods
+/*****************************************************************************/
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #452e00;
+  background-color: #FCF3E5; 
+}
+
+#content {
+  margin: 0 auto;
+  width: 900px;
+  padding: 32px; 
+}
+
+#masthead {
+  margin-top: 80px;
+  margin-bottom: 0px; 
+}
+
+#masthead h1 {
+  font-family: Helvetica-Bold;
+  font-size: 44px;
+  color: #5E2E20;
+  line-height: 53px;
+  margin: 0 12px 0 0 ;
+  display: inline-block; 
+}
+
+#masthead h2 {
+  font-weight: bold;
+  font-size: 13px;
+  color: #352302;
+  margin-top: 10px;
+  width: 160px;
+  display: inline-block; 
+}
+
+#masthead em {
+  color: #de922f;
+  font-style: normal; 
+}
+
+#footer_pod {
+  margin-top:80px;
+  text-align: center;
+}
+
+.about {
+  margin-top:20px;
+  font-family: Helvetica-Bold;
+  font-size: 13px;
+  color: #352302;
+  line-height: 16px;
+  text-align: center;
+}
+
+/*****************************************************************************/
+/* Typography
+/*****************************************************************************/
+
+a {
+  color: #5e2e20;
+  font-weight: bold;
+  text-decoration: none; 
+}
+
+/*****************************************************************************/
+/* Sections
+/*****************************************************************************/
+
+.description {
+  margin-top: 20px;
+  font-family: Helvetica-Bold;
+  font-size: 13px;
+  color: #352302;
+  line-height: 16px;
+  text-align: center;
+}
+
+#stats {
+  border-width: 4px 0;
+  border-style:solid;
+  border-color:#352302;
+  height:380px;
+  position: relative;
+}
+
+#actions {
+  text-align: center;
+  position: absolute;
+  top:40px;
+  left:40px;
+  width:140px;
+}
+
+#actions p#count {
+  font-size: 72px;
+}
+#actions p#count-pods {
+  font-size: 19px;
+}
+#actions p#count-counting {
+  font-size: 18px;
+}
+
+#actions p {
+  font-family: HelveticaNeue-CondensedBold;
+  color: #DE922F;
+}
+
+p {
+  font-size: 12px;
+  color: rgb(140, 122, 115);
+  margin: 0px;
+}
+
+#chart_contianer {
+  margin-top:40px;
+  position: relative;
+}
+
+#x-scale {
+  margin-top:0px;
+  font-family: HelveticaNeue-CondensedBold;
+  font-size: 12px;
+  color: #DE922F;
+}
+
+/* r: */
+
+/*****************************************************************************/
+/* Chart
+/*****************************************************************************/
+
+#chart {
+  height:300px;
+}
+
+#y_axis {
+  position: absolute;
+  top: 1px;
+  right: 0px;
+  width: 40px;
+}
+
+.rickshaw_graph .y_grid .tick, .rickshaw_graph .x_grid_d3 .tick {
+  visibility:hidden
+}
+
+.rickshaw_graph .y_ticks path, .rickshaw_graph .y_ticks .tick {
+  stroke: #8C7A73;
+  stroke-width:1px;
+}
+
+
+.rickshaw_graph .y_ticks text {
+  font-family: HelveticaNeue-CondensedBold;
+  font-size: 14px;
+  opacity:1;
+  fill: #8C7A73;
+}
+
+.rickshaw_graph svg {
+  padding: 4px 0;
+}
+
+.rickshaw_graph .detail {
+  background:none;
+}
+
+.rickshaw_graph .detail .item.active {
+  fill: #8C7A73;
+}
